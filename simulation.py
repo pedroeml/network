@@ -8,10 +8,11 @@ next_hop_port = -1
 dest_ip = ''
 src_ip = ''
 ttl = -1
+data_chunks = []
 
 
 def start(network, source_name, destination_name, data):
-    global current_hop, current_hop_port, next_hop, next_hop_port, dest_ip, ttl, src_ip
+    global current_hop, current_hop_port, next_hop, next_hop_port, dest_ip, ttl, src_ip, data_chunks
 
     ttl = 8
 
@@ -159,12 +160,16 @@ def find_next_hop_from_router(network, dest_ip, is_arp):
 
 
 def send_icmp(r, data):
-    global current_hop, current_hop_port, next_hop, next_hop_port, dest_ip, ttl
+    global current_hop, current_hop_port, next_hop, next_hop_port, dest_ip, ttl, data_chunks
 
     src_mac = current_hop.port.mac_address if type(current_hop) is Node else current_hop.ports[current_hop_port].mac_address
     dest_mac = next_hop.port.mac_address if type(next_hop) is Node else next_hop.ports[next_hop_port].mac_address
     mtu = current_hop.port.mtu if type(current_hop) is Node else current_hop.ports[current_hop_port].mtu
-    data_chunks = [data[i:i+mtu] for i in range(0, len(data), mtu)]
+
+    if len(data_chunks) != 0:
+        data_chunks = [chunk[i:i+mtu] for chunk in data_chunks for i in range(0, len(chunk), mtu)]
+    else:
+        data_chunks = [data[i:i+mtu] for i in range(0, len(data), mtu)]
 
     for i in range(len(data_chunks)):
         chunk = data_chunks[i]
