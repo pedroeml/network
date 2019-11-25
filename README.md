@@ -109,9 +109,9 @@ R3 => R1 : ETH (src=00:00:00:00:00:31 dst=00:00:00:00:00:12) \n IP (src=20.0.0.2
 R3 => R1 : ETH (src=00:00:00:00:00:31 dst=00:00:00:00:00:12) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=6 mf=1 off=6) \n ICMP - Echo reply (data=orl);
 R3 => R1 : ETH (src=00:00:00:00:00:31 dst=00:00:00:00:00:12) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=6 mf=0 off=9) \n ICMP - Echo reply (data=d);
 R1 => N1 : ETH (src=00:00:00:00:00:10 dst=00:00:00:00:00:01) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=5 mf=1 off=0) \n ICMP - Echo reply (data=hel);
-R1 => N1 : ETH (src=00:00:00:00:00:10 dst=00:00:00:00:00:01) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=5 mf=1 off=15) \n ICMP - Echo reply (data=low);
-R1 => N1 : ETH (src=00:00:00:00:00:10 dst=00:00:00:00:00:01) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=5 mf=1 off=30) \n ICMP - Echo reply (data=orl);
-R1 => N1 : ETH (src=00:00:00:00:00:10 dst=00:00:00:00:00:01) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=5 mf=0 off=45) \n ICMP - Echo reply (data=d);
+R1 => N1 : ETH (src=00:00:00:00:00:10 dst=00:00:00:00:00:01) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=5 mf=1 off=3) \n ICMP - Echo reply (data=low);
+R1 => N1 : ETH (src=00:00:00:00:00:10 dst=00:00:00:00:00:01) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=5 mf=1 off=6) \n ICMP - Echo reply (data=orl);
+R1 => N1 : ETH (src=00:00:00:00:00:10 dst=00:00:00:00:00:01) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=5 mf=0 off=9) \n ICMP - Echo reply (data=d);
 N1 rbox N1 : Received helloworld;
 ```
 

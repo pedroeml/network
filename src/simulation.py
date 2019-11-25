@@ -171,15 +171,17 @@ def send_icmp(r, data):
     else:
         data_chunks = [data[i:i+mtu] for i in range(0, len(data), mtu)]
 
+    off = 0
     for i in range(len(data_chunks)):
         chunk = data_chunks[i]
         mf = 1 if i != len(data_chunks) - 1 else 0
-        off = i*mtu
 
         if r == "reply":    # if the type is reply
             write_file.icmp_echo_reply(current_hop.name, next_hop.name, src_ip, dest_ip, str(ttl), src_mac, dest_mac, chunk, str(mf), str(off))
         else:
             write_file.icmp_echo_request(current_hop.name, next_hop.name, src_ip, dest_ip, str(ttl), src_mac, dest_mac, chunk, str(mf), str(off))
+
+        off += len(chunk)
 
     if type(next_hop) is Node:
         write_file.icmp_rbox(next_hop.name, next_hop.name, ''.join(data_chunks))
