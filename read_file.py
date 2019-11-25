@@ -34,7 +34,7 @@ def read_line(network, line, type=0):
 
 def create_node(line_items):
     line_items[3] = line_items[3].strip("\r")
-    p = Port(line_items[1], line_items[2].split('/')[0], line_items[3])
+    p = Port(line_items[1], line_items[2].split('/')[0], int(line_items[3]))
     n = Node(line_items[0], p, line_items[4])
     return n
 
@@ -43,7 +43,7 @@ def create_router(line_items):
     r = Router(line_items[0], int(line_items[1]))
     i = 0
     for index in range(2, len(line_items), 3):
-        p = Port(line_items[index], line_items[index+1].split('/')[0], line_items[index+2])
+        p = Port(line_items[index], line_items[index+1].split('/')[0], int(line_items[index+2]))
         r.add_port(p)
     return r
 

@@ -163,11 +163,18 @@ def send_icmp(r, data):
 
     src_mac = current_hop.port.mac_address if type(current_hop) is Node else current_hop.ports[current_hop_port].mac_address
     dest_mac = next_hop.port.mac_address if type(next_hop) is Node else next_hop.ports[next_hop_port].mac_address
+    mtu = current_hop.port.mtu if type(current_hop) is Node else current_hop.ports[current_hop_port].mtu
+    data_chunks = [data[i:i+mtu] for i in range(0, len(data), mtu)]
 
-    if r == "reply":    # if the type is reply
-        write_file.icmp_echo_reply(current_hop.name, next_hop.name, src_ip, dest_ip, str(ttl), src_mac, dest_mac, data)
-    else:
-        write_file.icmp_echo_request(current_hop.name, next_hop.name, src_ip, dest_ip, str(ttl), src_mac, dest_mac, data)
+    for i in range(len(data_chunks)):
+        chunk = data_chunks[i]
+        mf = 1 if i != len(data_chunks) - 1 else 0
+        off = i*mtu
+
+        if r == "reply":    # if the type is reply
+            write_file.icmp_echo_reply(current_hop.name, next_hop.name, src_ip, dest_ip, str(ttl), src_mac, dest_mac, chunk, str(mf), str(off))
+        else:
+            write_file.icmp_echo_request(current_hop.name, next_hop.name, src_ip, dest_ip, str(ttl), src_mac, dest_mac, chunk, str(mf), str(off))
 
     if type(next_hop) is Node:
-        write_file.icmp_rbox(next_hop.name, next_hop.name, data)
+        write_file.icmp_rbox(next_hop.name, next_hop.name, ''.join(data_chunks))

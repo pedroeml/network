@@ -6,4 +6,4 @@ class Port:
         self.mtu = mtu
 
     def __str__(self):
-        return '(%s - %s - %s)' % (self.mac_address, self.ip_address, self.mtu)
+        return '(%s - %s - %d)' % (self.mac_address, self.ip_address, self.mtu)
